@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultimate File Translator Pro</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background: #f0f4f8; display: flex; justify-content: center; padding: 20px; }
+        .container { background: white; width: 100%; max-width: 800px; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        h2 { color: #1e40af; text-align: center; margin-top: 0; }
+        
+        #google_translate_element {
+            background: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 20px;
+            border: 1px solid #d1d5db;
+            min-height: 50px;
+        }
+
+        .drop-zone {
+            border: 2px dashed #3b82f6;
+            padding: 30px;
+            text-align: center;
+            border-radius: 12px;
+            cursor: pointer;
+            background: #eff6ff;
+            margin-bottom: 20px;
+            transition: 0.3s;
+        }
+        .drop-zone:hover { background: #dbeafe; }
+
+        #output {
+            width: 100%;
+            min-height: 350px;
+            padding: 20px;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            background: #ffffff;
+            white-space: pre-wrap;
+            font-size: 16px;
+            color: #1e293b;
+            overflow-y: auto;
+            margin-bottom: 10px;
+        }
+
+        .btn-box { display: flex; gap: 10px; }
+        button { 
+            flex: 1; padding: 15px; border: none; border-radius: 8px; 
+            font-weight: bold; cursor: pointer; font-size: 16px; transition: 0.2s;
+        }
+        .load-btn { background: #2563eb; color: white; }
+        .save-btn { background: #059669; color: white; }
+        button:hover { opacity: 0.9; transform: scale(0.98); }
+        
+        input[type="file"] { display: none; }
+        .status-msg { text-align: center; font-size: 13px; color: #64748b; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Hindi File Translator 4.0</h2>
+
+    <!-- Adsterra Banner Ad Unit (300x250) -->
+    <div style="text-align:center; margin-bottom:20px;">
+        <script type="text/javascript">
+            atOptions = {
+                'key' : '78475050ebe5e3f6d8fb19d3222be60a',
+                'format' : 'iframe',
+                'height' : 250,
+                'width' : 300,
+                'params' : {}
+            };
+        </script>
+        <script src="https://www.highrevenueformat.com/78475050ebe5e3f6d8fb19d3222be60a/invoke.js"></script>
+    </div>
+    <!-- End Adsterra Banner Ad -->
+
+    <div id="google_translate_element"></div>
+
+    <div class="drop-zone" onclick="document.getElementById('fileInput').click()">
+        <b id="info">📂 Click to Upload English .txt File</b>
+        <input type="file" id="fileInput" accept=".txt">
+    </div>
+
+    <div id="output" class="notranslate">File content will appear here...</div>
+
+    <div class="btn-box">
+        <button class="load-btn" onclick="readFile()">1. Load & Translate</button>
+        <button class="save-btn" onclick="saveFile()">2. Download Hindi File</button>
+    </div>
+    
+    <div class="status-msg">
+        <b>Tip:</b> Agar translate na ho, toh page par Right-Click karke <b>'Translate to Hindi'</b> dabayein.
+    </div>
+
+    <!-- Adsterra Native Banner Ad Unit -->
+    <div style="margin-top:20px;">
+        <script async="async" data-cfasync="false" src="https://pl31004107.profitableratecpmnetwork.com/64b62f2b3dac412a0e464adc9612b736/invoke.js"></script>
+        <div id="container-64b62f2b3dac412a0e464adc9612b736"></div>
+    </div>
+    <!-- End Adsterra Native Banner -->
+</div>
+
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'en',
+            includedLanguages: 'hi',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: true
+        }, 'google_translate_element');
+    }
+</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+<script>
+    const fileInput = document.getElementById('fileInput');
+    const output = document.getElementById('output');
+    let originalFileName = "Translated_Hindi.txt";
+
+    fileInput.onchange = () => {
+        if(fileInput.files[0]) {
+            const name = fileInput.files[0].name;
+            document.getElementById('info').innerText = "Selected: " + name;
+            // Original name extract karke Hindi prefix jodna
+            originalFileName = "Hindi_" + name;
+        }
+    };
+
+    function readFile() {
+        const file = fileInput.files[0];
+        if (!file) return alert("Pehle file select karein!");
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            // "notranslate" class hatana taaki Google ise translate kar sake
+            output.classList.remove('notranslate');
+            output.innerText = e.target.result;
+            
+            // Lag fix karne ke liye scroll reset
+            window.scrollTo(0,0);
+            alert("Text load ho gaya! Kuch seconds wait karein, Google automatically ise Hindi kar dega.");
+        };
+        reader.readAsText(file);
+    }
+
+    function saveFile() {
+        const text = output.innerText;
+        if(text.includes("File content will appear here")) return alert("Pehle file load karein!");
+
+        const blob = new Blob([text], { type: 'text/plain' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = originalFileName; // Fix: original file name use hoga
+        link.click();
+    }
+</script>
+
+</body>
+</html>
