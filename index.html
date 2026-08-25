@@ -76,18 +76,18 @@
 <div class="container">
     <h2>English & Chinese → Hindi File Translator 4.0</h2>
 
-    <!-- Adsterra Banner Ad Unit (300x250) -->
+    <!-- Adsterra Banner Ad Unit (300x250) - Vercel Updated -->
     <div style="text-align:center; margin-bottom:20px;">
         <script type="text/javascript">
             atOptions = {
-                'key' : '78475050ebe5e3f6d8fb19d3222be60a',
+                'key' : '71690fec8e71e33020125f0e537b756a',
                 'format' : 'iframe',
                 'height' : 250,
                 'width' : 300,
                 'params' : {}
             };
         </script>
-        <script src="https://www.highrevenueformat.com/78475050ebe5e3f6d8fb19d3222be60a/invoke.js"></script>
+        <script type="text/javascript" src="https://www.highperformanceformat.com/71690fec8e71e33020125f0e537b756a/invoke.js"></script>
     </div>
     <!-- End Adsterra Banner Ad -->
 
@@ -116,10 +116,10 @@
         <b style="color:#059669;">Auto-Scroll ON:</b> Translate ke dauran automatically neeche scroll hota rahega.
     </div>
 
-    <!-- Adsterra Native Banner Ad Unit -->
+    <!-- Adsterra Native Banner Ad Unit - Vercel Updated -->
     <div style="margin-top:20px;">
-        <script async="async" data-cfasync="false" src="https://pl31004107.profitableratecpmnetwork.com/64b62f2b3dac412a0e464adc9612b736/invoke.js"></script>
-        <div id="container-64b62f2b3dac412a0e464adc9612b736"></div>
+        <script async="async" data-cfasync="false" src="https://pl31020269.profitableratecpmnetwork.com/41d6e43f8ea617a9c49f629080069b48/invoke.js"></script>
+        <div id="container-41d6e43f8ea617a9c49f629080069b48"></div>
     </div>
     <!-- End Adsterra Native Banner -->
 </div>
@@ -155,24 +155,20 @@
     };
 
     function startAutoScroll() {
-        // Pehle se chal raha ho to band karo
         stopAutoScroll();
 
         autoScrollActive = true;
         lastChangeTime = Date.now();
 
-        // Har 300ms mein force scroll to bottom
         scrollInterval = setInterval(() => {
             if (!autoScrollActive) return;
             output.scrollTop = output.scrollHeight;
 
-            // 20 seconds tak koi change na aaye to band
             if (Date.now() - lastChangeTime > 20000) {
                 stopAutoScroll();
             }
         }, 300);
 
-        // Google Translate DOM change karta hai → usko detect karke scroll karo
         mutationObserver = new MutationObserver(() => {
             lastChangeTime = Date.now();
             output.scrollTop = output.scrollHeight;
@@ -202,18 +198,14 @@
 
         const reader = new FileReader();
         reader.onload = (e) => {
-            // "notranslate" class hatana taaki Google ise translate kar sake
             output.classList.remove('notranslate');
             output.innerText = e.target.result;
             
-            // Scroll reset + auto-scroll start
             window.scrollTo(0, 0);
             output.scrollTop = 0;
 
-            // Auto-scroll shuru karo (alert se pehle)
             startAutoScroll();
 
-            // Chhota sa delay ke baad alert (taaki scroll start ho jaye)
             setTimeout(() => {
                 alert("Text load ho gaya!\n\nAuto-scroll chal raha hai.\nGoogle automatically English/Chinese se Hindi kar dega.\n\nAgar nahi hua toh page par Right-Click → Translate to Hindi select karein.");
             }, 300);
@@ -227,7 +219,6 @@
             return alert("Pehle file load karein aur translate hone ka wait karein!");
         }
 
-        // Save se pehle auto-scroll band
         stopAutoScroll();
 
         const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
