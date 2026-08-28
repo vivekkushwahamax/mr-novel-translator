@@ -35,7 +35,6 @@
         #output {
             width: 100%;
             min-height: 350px;
-            max-height: 60vh;
             padding: 20px;
             border: 1px solid #cbd5e1;
             border-radius: 10px;
@@ -78,16 +77,16 @@
 
     <!-- Adsterra Banner Ad Unit (300x250) -->
     <div style="text-align:center; margin-bottom:20px;">
-        <script type="text/javascript">
+        <script>
             atOptions = {
-                'key' : '78475050ebe5e3f6d8fb19d3222be60a',
+                'key' : '71690fec8e71e33020125f0e537b756a',
                 'format' : 'iframe',
                 'height' : 250,
                 'width' : 300,
                 'params' : {}
             };
         </script>
-        <script src="https://www.highrevenueformat.com/78475050ebe5e3f6d8fb19d3222be60a/invoke.js"></script>
+        <script src="https://www.highrevenueformat.com/71690fec8e71e33020125f0e537b756a/invoke.js"></script>
     </div>
     <!-- End Adsterra Banner Ad -->
 
@@ -112,14 +111,13 @@
     
     <div class="status-msg">
         <b>Tip:</b> Agar translate na ho, toh page par Right-Click karke <b>'Translate to Hindi'</b> dabayein.<br>
-        Chinese text ke liye bhi same tarika kaam karta hai. Thoda wait karein (2-5 seconds).<br>
-        <b style="color:#059669;">Auto-Scroll ON:</b> Translate ke dauran automatically neeche scroll hota rahega.
+        Chinese text ke liye bhi same tarika kaam karta hai. Thoda wait karein (2-5 seconds).
     </div>
 
     <!-- Adsterra Native Banner Ad Unit -->
     <div style="margin-top:20px;">
-        <script async="async" data-cfasync="false" src="https://pl31004107.profitableratecpmnetwork.com/64b62f2b3dac412a0e464adc9612b736/invoke.js"></script>
-        <div id="container-64b62f2b3dac412a0e464adc9612b736"></div>
+        <script async="async" data-cfasync="false" src="https://pl31020269.profitableratecpmnetwork.com/41d6e43f8ea617a9c49f629080069b48/invoke.js"></script>
+        <div id="container-41d6e43f8ea617a9c49f629080069b48"></div>
     </div>
     <!-- End Adsterra Native Banner -->
 </div>
@@ -141,60 +139,15 @@
     const fileInput = document.getElementById('fileInput');
     const output = document.getElementById('output');
     let originalFileName = "Translated_Hindi.txt";
-    let autoScrollActive = false;
-    let scrollInterval = null;
-    let mutationObserver = null;
-    let lastChangeTime = 0;
 
     fileInput.onchange = () => {
         if(fileInput.files[0]) {
             const name = fileInput.files[0].name;
             document.getElementById('info').innerHTML = "✅ Selected: " + name + "<br><small>Ab 'Load & Translate' button dabayein</small>";
+            // Original name extract karke Hindi prefix jodna
             originalFileName = "Hindi_" + name;
         }
     };
-
-    function startAutoScroll() {
-        // Pehle se chal raha ho to band karo
-        stopAutoScroll();
-
-        autoScrollActive = true;
-        lastChangeTime = Date.now();
-
-        // Har 300ms mein force scroll to bottom
-        scrollInterval = setInterval(() => {
-            if (!autoScrollActive) return;
-            output.scrollTop = output.scrollHeight;
-
-            // 20 seconds tak koi change na aaye to band
-            if (Date.now() - lastChangeTime > 20000) {
-                stopAutoScroll();
-            }
-        }, 300);
-
-        // Google Translate DOM change karta hai → usko detect karke scroll karo
-        mutationObserver = new MutationObserver(() => {
-            lastChangeTime = Date.now();
-            output.scrollTop = output.scrollHeight;
-        });
-        mutationObserver.observe(output, {
-            childList: true,
-            subtree: true,
-            characterData: true
-        });
-    }
-
-    function stopAutoScroll() {
-        autoScrollActive = false;
-        if (scrollInterval) {
-            clearInterval(scrollInterval);
-            scrollInterval = null;
-        }
-        if (mutationObserver) {
-            mutationObserver.disconnect();
-            mutationObserver = null;
-        }
-    }
 
     function readFile() {
         const file = fileInput.files[0];
@@ -206,19 +159,11 @@
             output.classList.remove('notranslate');
             output.innerText = e.target.result;
             
-            // Scroll reset + auto-scroll start
-            window.scrollTo(0, 0);
-            output.scrollTop = 0;
-
-            // Auto-scroll shuru karo (alert se pehle)
-            startAutoScroll();
-
-            // Chhota sa delay ke baad alert (taaki scroll start ho jaye)
-            setTimeout(() => {
-                alert("Text load ho gaya!\n\nAuto-scroll chal raha hai.\nGoogle automatically English/Chinese se Hindi kar dega.\n\nAgar nahi hua toh page par Right-Click → Translate to Hindi select karein.");
-            }, 300);
+            // Lag fix karne ke liye scroll reset
+            window.scrollTo(0,0);
+            alert("Text load ho gaya!\n\nKuch seconds wait karein, Google automatically English/Chinese se Hindi kar dega.\n\nAgar nahi hua toh page par Right-Click → Translate to Hindi select karein.");
         };
-        reader.readAsText(file, 'UTF-8');
+        reader.readAsText(file, 'UTF-8'); // UTF-8 for proper Chinese support
     }
 
     function saveFile() {
@@ -226,9 +171,6 @@
         if(text.includes("File content will appear here") || text.includes("यहाँ आपकी फाइल")) {
             return alert("Pehle file load karein aur translate hone ka wait karein!");
         }
-
-        // Save se pehle auto-scroll band
-        stopAutoScroll();
 
         const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
         const link = document.createElement('a');
