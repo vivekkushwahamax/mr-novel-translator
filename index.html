@@ -3,90 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Auto-Translate EPUB & TXT Pro</title>
-    <!-- Vercel Web Analytics -->
-    <script defer src="/_vercel/insights/script.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <title>Ultimate File Translator Pro - English & Chinese to Hindi</title>
     <style>
         * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        body { background: #f0f4f8; padding: 20px; display: flex; justify-content: center; }
-        .container { background: white; width: 100%; max-width: 950px; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        body { background: #f0f4f8; display: flex; justify-content: center; padding: 20px; }
+        .container { background: white; width: 100%; max-width: 800px; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
         h2 { color: #1e40af; text-align: center; margin-top: 0; }
         
         #google_translate_element {
-            background: #fff; padding: 10px; border-radius: 8px; text-align: center;
-            margin-bottom: 20px; border: 1px solid #d1d5db;
+            background: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 20px;
+            border: 1px solid #d1d5db;
+            min-height: 50px;
         }
 
         .drop-zone {
-            border: 2px dashed #3b82f6; padding: 25px; text-align: center;
-            border-radius: 12px; cursor: pointer; background: #eff6ff; margin-bottom: 20px;
+            border: 2px dashed #3b82f6;
+            padding: 30px;
+            text-align: center;
+            border-radius: 12px;
+            cursor: pointer;
+            background: #eff6ff;
+            margin-bottom: 20px;
+            transition: 0.3s;
         }
+        .drop-zone:hover { background: #dbeafe; }
 
         #output {
-            width: 100%; 
-            min-height: 400px;
-            padding: 25px;
-            border: 1px solid #cbd5e1; 
+            width: 100%;
+            min-height: 350px;
+            max-height: 60vh;
+            padding: 20px;
+            border: 1px solid #cbd5e1;
             border-radius: 10px;
-            background: #ffffff; 
-            font-size: 18px; 
-            line-height: 1.8;
-            margin-bottom: 15px;
-            overflow: visible; 
+            background: #ffffff;
             white-space: pre-wrap;
+            font-size: 16px;
+            color: #1e293b;
+            overflow-y: auto;
+            margin-bottom: 10px;
         }
 
-        .btn-box { position: sticky; bottom: 20px; display: flex; gap: 10px; background: rgba(240,244,248,0.9); padding: 10px; border-radius: 10px; z-index: 100; flex-wrap: wrap; }
-        button { flex: 1; padding: 15px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 16px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); min-width: 140px; }
+        .btn-box { display: flex; gap: 10px; flex-wrap: wrap; }
+        button { 
+            flex: 1; padding: 15px; border: none; border-radius: 8px; 
+            font-weight: bold; cursor: pointer; font-size: 16px; transition: 0.2s;
+            min-width: 140px;
+        }
         .load-btn { background: #2563eb; color: white; }
         .save-btn { background: #059669; color: white; }
-        .scroll-btn { background: #f59e0b; color: white; }
+        button:hover { opacity: 0.9; transform: scale(0.98); }
         
-        .status-bar { text-align: center; font-size: 14px; color: #1e40af; font-weight: bold; margin-bottom: 10px; display: none; }
+        input[type="file"] { display: none; }
+        .status-msg { text-align: center; font-size: 13px; color: #64748b; margin-top: 10px; line-height: 1.5; }
+        .lang-info {
+            background: #f0fdf4;
+            border: 1px solid #86efac;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #166534;
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>Smart EPUB & TXT Translator Pro</h2>
+    <h2>English & Chinese → Hindi File Translator 4.0</h2>
 
-    <!-- Adsterra Banner Ad Unit (300x250) - Screenshot 1 Code -->
+    <!-- Adsterra Banner Ad Unit (300x250) -->
     <div style="text-align:center; margin-bottom:20px;">
         <script type="text/javascript">
             atOptions = {
-                'key' : '71690fec8e71e33020125f0e537b756a',
+                'key' : '78475050ebe5e3f6d8fb19d3222be60a',
                 'format' : 'iframe',
                 'height' : 250,
                 'width' : 300,
                 'params' : {}
             };
         </script>
-        <script type="text/javascript" src="https://www.highperformanceformat.com/71690fec8e71e33020125f0e537b756a/invoke.js"></script>
+        <script src="https://www.highrevenueformat.com/78475050ebe5e3f6d8fb19d3222be60a/invoke.js"></script>
     </div>
     <!-- End Adsterra Banner Ad -->
+
+    <div class="lang-info">
+        ✅ English (.txt) या Chinese (.txt) file upload करें → Automatically Hindi में translate हो जाएगी
+    </div>
 
     <div id="google_translate_element"></div>
 
     <div class="drop-zone" onclick="document.getElementById('fileInput').click()">
-        <b id="info">📂 Upload EPUB or TXT File (English / Chinese)</b>
-        <input type="file" id="fileInput" accept=".epub,.txt">
+        <b id="info">📂 Click to Upload English or Chinese .txt File</b><br>
+        <small style="color:#64748b;">English / 中文 → हिन्दी</small>
+        <input type="file" id="fileInput" accept=".txt">
     </div>
 
-    <div id="statusBar" class="status-bar">Processing... please wait...</div>
-    
-    <div id="output" class="notranslate">Kitab ya file ka content yahan load hoga...</div>
+    <div id="output" class="notranslate">File content will appear here...<br><br>यहाँ आपकी फाइल का content दिखेगा। Load करने के बाद Google Translate automatically Hindi कर देगा।</div>
 
     <div class="btn-box">
-        <button class="load-btn" onclick="readFile()">1. Load File</button>
-        <button class="scroll-btn" onclick="autoScroll()">2. Auto-Scan for Translation</button>
-        <button class="save-btn" onclick="saveAsTxt()">3. Download Hindi File</button>
+        <button class="load-btn" onclick="readFile()">1. Load & Translate</button>
+        <button class="save-btn" onclick="saveFile()">2. Download Hindi File</button>
+    </div>
+    
+    <div class="status-msg">
+        <b>Tip:</b> Agar translate na ho, toh page par Right-Click karke <b>'Translate to Hindi'</b> dabayein.<br>
+        Chinese text ke liye bhi same tarika kaam karta hai. Thoda wait karein (2-5 seconds).<br>
+        <b style="color:#059669;">Auto-Scroll ON:</b> Translate ke dauran automatically neeche scroll hota rahega.
     </div>
 
-    <!-- Adsterra Native Banner Ad Unit - Screenshot 2 Code -->
+    <!-- Adsterra Native Banner Ad Unit -->
     <div style="margin-top:20px;">
-        <script async="async" data-cfasync="false" src="https://pl31020269.profitableratecpmnetwork.com/41d6e43f8ea617a9c49f629080069b48/invoke.js"></script>
-        <div id="container-41d6e43f8ea617a9c49f629080069b48"></div>
+        <script async="async" data-cfasync="false" src="https://pl31004107.profitableratecpmnetwork.com/64b62f2b3dac412a0e464adc9612b736/invoke.js"></script>
+        <div id="container-64b62f2b3dac412a0e464adc9612b736"></div>
     </div>
     <!-- End Adsterra Native Banner -->
 </div>
@@ -94,7 +127,7 @@
 <script type="text/javascript">
     function googleTranslateElementInit() {
         new google.translate.TranslateElement({
-            pageLanguage: 'auto', 
+            pageLanguage: 'auto',
             includedLanguages: 'hi',
             layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
             autoDisplay: true,
@@ -107,93 +140,100 @@
 <script>
     const fileInput = document.getElementById('fileInput');
     const output = document.getElementById('output');
-    const statusBar = document.getElementById('statusBar');
+    let originalFileName = "Translated_Hindi.txt";
+    let autoScrollActive = false;
+    let scrollInterval = null;
+    let mutationObserver = null;
+    let lastChangeTime = 0;
 
     fileInput.onchange = () => {
         if(fileInput.files[0]) {
-            document.getElementById('info').innerHTML = "✅ Selected: " + fileInput.files[0].name + "<br><small>Ab 'Load File' button dabayein</small>";
+            const name = fileInput.files[0].name;
+            document.getElementById('info').innerHTML = "✅ Selected: " + name + "<br><small>Ab 'Load & Translate' button dabayein</small>";
+            originalFileName = "Hindi_" + name;
         }
     };
 
-    async function readFile() {
+    function startAutoScroll() {
+        // Pehle se chal raha ho to band karo
+        stopAutoScroll();
+
+        autoScrollActive = true;
+        lastChangeTime = Date.now();
+
+        // Har 300ms mein force scroll to bottom
+        scrollInterval = setInterval(() => {
+            if (!autoScrollActive) return;
+            output.scrollTop = output.scrollHeight;
+
+            // 20 seconds tak koi change na aaye to band
+            if (Date.now() - lastChangeTime > 20000) {
+                stopAutoScroll();
+            }
+        }, 300);
+
+        // Google Translate DOM change karta hai → usko detect karke scroll karo
+        mutationObserver = new MutationObserver(() => {
+            lastChangeTime = Date.now();
+            output.scrollTop = output.scrollHeight;
+        });
+        mutationObserver.observe(output, {
+            childList: true,
+            subtree: true,
+            characterData: true
+        });
+    }
+
+    function stopAutoScroll() {
+        autoScrollActive = false;
+        if (scrollInterval) {
+            clearInterval(scrollInterval);
+            scrollInterval = null;
+        }
+        if (mutationObserver) {
+            mutationObserver.disconnect();
+            mutationObserver = null;
+        }
+    }
+
+    function readFile() {
         const file = fileInput.files[0];
-        if (!file) return alert("Pehle EPUB ya TXT file chunein!");
+        if (!file) return alert("Pehle English ya Chinese .txt file select karein!");
 
-        statusBar.style.display = "block";
-        statusBar.innerText = "Reading File Data...";
-        output.innerHTML = "";
-        output.classList.add('notranslate');
-        
-        const fileName = file.name.toLowerCase();
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            // "notranslate" class hatana taaki Google ise translate kar sake
+            output.classList.remove('notranslate');
+            output.innerText = e.target.result;
+            
+            // Scroll reset + auto-scroll start
+            window.scrollTo(0, 0);
+            output.scrollTop = 0;
 
-        if (fileName.endsWith('.epub')) {
-            try {
-                const zip = await JSZip.loadAsync(file);
-                const htmlFiles = Object.keys(zip.files)
-                    .filter(name => name.endsWith('.html') || name.endsWith('.xhtml'))
-                    .sort();
+            // Auto-scroll shuru karo (alert se pehle)
+            startAutoScroll();
 
-                let fullHTML = "";
-                for (let fName of htmlFiles) {
-                    const content = await zip.files[fName].async("text");
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(content, 'text/html');
-                    const text = doc.body.innerText;
-                    if(text.trim().length > 5) {
-                        fullHTML += text + "\n\n";
-                    }
-                }
-
-                output.innerText = fullHTML;
-                output.classList.remove('notranslate');
-                statusBar.innerText = "EPUB Loaded! Click 'Auto-Scan' to trigger translation.";
-                alert("EPUB load ho gayi hai. Ab 'Auto-Scan' button dabayein.");
-            } catch (err) {
-                alert("EPUB read karne mein error!");
-                statusBar.style.display = "none";
-            }
-        } else if (fileName.endsWith('.txt')) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                output.classList.remove('notranslate');
-                output.innerText = e.target.result;
-                statusBar.innerText = "TXT Loaded! Click 'Auto-Scan' to trigger translation.";
-                alert("TXT file load ho gayi hai. Ab 'Auto-Scan' button dabayein.");
-            };
-            reader.readAsText(file, 'UTF-8');
-        } else {
-            alert("Kewal .epub aur .txt files hi supported hain!");
-            statusBar.style.display = "none";
-        }
+            // Chhota sa delay ke baad alert (taaki scroll start ho jaye)
+            setTimeout(() => {
+                alert("Text load ho gaya!\n\nAuto-scroll chal raha hai.\nGoogle automatically English/Chinese se Hindi kar dega.\n\nAgar nahi hua toh page par Right-Click → Translate to Hindi select karein.");
+            }, 300);
+        };
+        reader.readAsText(file, 'UTF-8');
     }
 
-    function autoScroll() {
-        if(output.innerText.length < 50) return alert("Pehle file load karein!");
-        
-        statusBar.innerText = "Auto-Scanning for translation... please wait.";
-        let distance = 400;
-        let delay = 100;
-
-        let timer = setInterval(() => {
-            window.scrollBy(0, distance);
-            if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight) {
-                clearInterval(timer);
-                window.scrollTo(0, 0);
-                statusBar.innerText = "Scanning Complete! Google Translate should now process the whole text.";
-                alert("Scan pura hua! Ab aap download kar sakte hain.");
-            }
-        }, delay);
-    }
-
-    function saveAsTxt() {
+    function saveFile() {
         const text = output.innerText;
-        if(text.includes("Kitab ya file ka content")) {
-            return alert("Pehle file load karein!");
+        if(text.includes("File content will appear here") || text.includes("यहाँ आपकी फाइल")) {
+            return alert("Pehle file load karein aur translate hone ka wait karein!");
         }
+
+        // Save se pehle auto-scroll band
+        stopAutoScroll();
+
         const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
-        link.download = "Hindi_" + (fileInput.files[0] ? fileInput.files[0].name.replace(/\.[^/.]+$/, ".txt") : "Translated.txt");
+        link.download = originalFileName;
         link.click();
     }
 </script>
