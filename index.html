@@ -80,7 +80,7 @@
 <div class="container">
     <h2>English & Chinese → Hindi File Translator 4.0</h2>
 
-    <!-- Adsterra Banner Ad Unit (300x250) - Vercel Updated -->
+    <!-- Adsterra Banner Ad Unit (300x250) -->
     <div style="text-align:center; margin-bottom:20px;">
         <script type="text/javascript">
             atOptions = {
@@ -116,10 +116,10 @@
     
     <div class="status-msg">
         <b>Tip:</b> Agar translate na ho, toh page par Right-Click karke <b>'Translate to Hindi'</b> dabayein.<br>
-        Chinese text ke liye bhi same tarika kaam karta hai. Thoda wait karein.
+        Chinese text ke liye bhi same tarika kaam karta hai. Large files chunk-loaded to prevent lagging.
     </div>
 
-    <!-- Adsterra Native Banner Ad Unit - Vercel Updated -->
+    <!-- Adsterra Native Banner Ad Unit -->
     <div style="margin-top:20px;">
         <script async="async" data-cfasync="false" src="https://pl31020269.profitableratecpmnetwork.com/41d6e43f8ea617a9c49f629080069b48/invoke.js"></script>
         <div id="container-41d6e43f8ea617a9c49f629080069b48"></div>
@@ -146,7 +146,7 @@
     let originalFileName = "Translated_Hindi.txt";
     let fileLines = [];
     let currentLineIndex = 0;
-    const CHUNK_SIZE = 200; // एक बार में 200 लाइनें लोड होंगी ताकि लैग न हो
+    const CHUNK_SIZE = 200;
 
     fileInput.onchange = () => {
         if(fileInput.files[0]) {
@@ -160,14 +160,13 @@
         const file = fileInput.files[0];
         if (!file) return alert("Pehle English ya Chinese .txt file select karein!");
 
-        output.innerText = "Failing loading & splitting large file... Kripya thoda intezaar karein.";
+        output.innerText = "Loading & splitting large file... Kripya thoda intezaar karein.";
         
         const reader = new FileReader();
         reader.onload = (e) => {
             output.classList.remove('notranslate');
             const text = e.target.result;
             
-            // बड़ी फ़ाइल को लाइनों में तोड़ना ताकि लैग न हो
             fileLines = text.split(/\r?\n/);
             currentLineIndex = 0;
             output.innerText = "";
@@ -180,7 +179,6 @@
         reader.readAsText(file, 'UTF-8');
     }
 
-    // धीरे-धीरे हिस्से लोड करने का फंक्शन (Lag-free)
     function loadNextChunk() {
         if (currentLineIndex >= fileLines.length) return;
 
@@ -188,11 +186,10 @@
         output.innerText += chunk + "\n";
         currentLineIndex += CHUNK_SIZE;
 
-        // अगर अभी और डेटा बाकी है, तो अगले चंक को थोड़ा डिले देकर लोड करें
         if (currentLineIndex < fileLines.length) {
             setTimeout(loadNextChunk, 300);
         } else {
-            alert("6MB ki file successfully load ho chuki hai!\n\nGoogle Translate background me ise Hindi me convert kar raha hai.");
+            alert("File successfully load ho chuki hai!\n\nGoogle Translate background me ise Hindi me convert kar raha hai.");
         }
     }
 
