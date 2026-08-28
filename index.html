@@ -116,8 +116,8 @@
     
     <div class="status-msg">
         <b>Tip:</b> Agar translate na ho, toh page par Right-Click karke <b>'Translate to Hindi'</b> dabayein.<br>
-        Chinese text ke liye bhi same tarika kaam karta hai. Thoda wait karein (2-5 seconds).<br>
-        <b style="color:#059669;">Auto-Scroll ON:</b> Translate ke dauran automatically neeche scroll hota rahega.
+        Chinese text ke liye bhi same tarika kaam karta hai. Thoda wait karein (4-5 seconds).<br>
+        <b style="color:#059669;">Smart Auto-Scroll ON:</b> Translate ke sath dheere-dheere neeche scroll hoga.
     </div>
 
     <!-- Adsterra Native Banner Ad Unit - Vercel Updated -->
@@ -147,8 +147,6 @@
     let originalFileName = "Translated_Hindi.txt";
     let autoScrollActive = false;
     let scrollInterval = null;
-    let mutationObserver = null;
-    let lastChangeTime = 0;
 
     fileInput.onchange = () => {
         if(fileInput.files[0]) {
@@ -160,28 +158,24 @@
 
     function startAutoScroll() {
         stopAutoScroll();
-
         autoScrollActive = true;
-        lastChangeTime = Date.now();
-
-        scrollInterval = setInterval(() => {
+        
+        // 4 सेकंड का डिले ताकि Google Translate को टेक्स्ट प्रोसेस और ट्रांसलेट करने का मौका मिल सके
+        setTimeout(() => {
             if (!autoScrollActive) return;
-            output.scrollTop = output.scrollHeight;
-
-            if (Date.now() - lastChangeTime > 20000) {
-                stopAutoScroll();
-            }
-        }, 300);
-
-        mutationObserver = new MutationObserver(() => {
-            lastChangeTime = Date.now();
-            output.scrollTop = output.scrollHeight;
-        });
-        mutationObserver.observe(output, {
-            childList: true,
-            subtree: true,
-            characterData: true
-        });
+            
+            scrollInterval = setInterval(() => {
+                if (!autoScrollActive) return;
+                
+                // धीरे-धीरे और स्मूथ तरीके से आगे बढ़ेगा (50px हर बार)
+                output.scrollBy({ top: 50, behavior: 'smooth' });
+                
+                // अगर सबसे नीचे पहुँच जाए तो रोक दें
+                if (output.scrollTop + output.clientHeight >= output.scrollHeight - 5) {
+                    stopAutoScroll();
+                }
+            }, 1500); // हर 1.5 सेकंड में थोड़ा-थोड़ा नीचे जाएगा
+        }, 4000);
     }
 
     function stopAutoScroll() {
@@ -189,10 +183,6 @@
         if (scrollInterval) {
             clearInterval(scrollInterval);
             scrollInterval = null;
-        }
-        if (mutationObserver) {
-            mutationObserver.disconnect();
-            mutationObserver = null;
         }
     }
 
@@ -208,10 +198,11 @@
             window.scrollTo(0, 0);
             output.scrollTop = 0;
 
+            // ट्रांसलेशन और बैलेंस्ड ऑटो-स्क्रॉल चालू करें
             startAutoScroll();
 
             setTimeout(() => {
-                alert("Text load ho gaya!\n\nAuto-scroll chal raha hai.\nGoogle automatically English/Chinese se Hindi kar dega.\n\nAgar nahi hua toh page par Right-Click → Translate to Hindi select karein.");
+                alert("Text load ho gaya hai!\n\nGoogle Translate background में हिंदी कर रहा है और ऑटो-स्क्रॉल धीरे-धीरे चल रहा है।");
             }, 300);
         };
         reader.readAsText(file, 'UTF-8');
