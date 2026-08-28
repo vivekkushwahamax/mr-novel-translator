@@ -116,8 +116,8 @@
     
     <div class="status-msg">
         <b>Tip:</b> Agar translate na ho, toh page par Right-Click karke <b>'Translate to Hindi'</b> dabayein.<br>
-        Chinese text ke liye bhi same tarika kaam karta hai. Thoda wait karein (4-5 seconds).<br>
-        <b style="color:#059669;">Smart Auto-Scroll ON:</b> Translate ke sath dheere-dheere neeche scroll hoga.
+        Chinese text ke liye bhi same tarika kaam karta hai. Thoda wait karein.<br>
+        <b style="color:#059669;">Optimized Auto-Scroll ON:</b> Lag-free reading experience.
     </div>
 
     <!-- Adsterra Native Banner Ad Unit - Vercel Updated -->
@@ -160,22 +160,22 @@
         stopAutoScroll();
         autoScrollActive = true;
         
-        // 4 सेकंड का डिले ताकि Google Translate को टेक्स्ट प्रोसेस और ट्रांसलेट करने का मौका मिल सके
+        // फाइल लोड होने के बाद 3 सेकंड रुकें ताकि ट्रांसलेशन शुरू हो जाए
         setTimeout(() => {
             if (!autoScrollActive) return;
             
             scrollInterval = setInterval(() => {
                 if (!autoScrollActive) return;
                 
-                // धीरे-धीरे और स्मूथ तरीके से आगे बढ़ेगा (50px हर बार)
-                output.scrollBy({ top: 50, behavior: 'smooth' });
+                // बहुत ही हल्का और स्मूथ स्क्रॉल ताकि CPU पर लोड (Lag) न पड़े
+                output.scrollBy({ top: 30, behavior: 'smooth' });
                 
-                // अगर सबसे नीचे पहुँच जाए तो रोक दें
+                // अगर अंत में पहुँच जाए तो रोक दें
                 if (output.scrollTop + output.clientHeight >= output.scrollHeight - 5) {
                     stopAutoScroll();
                 }
-            }, 1500); // हर 1.5 सेकंड में थोड़ा-थोड़ा नीचे जाएगा
-        }, 4000);
+            }, 800); // अंतराल को संतुलित किया गया है ताकि ट्रांसलेशन के साथ मैच हो
+        }, 3000);
     }
 
     function stopAutoScroll() {
@@ -198,12 +198,7 @@
             window.scrollTo(0, 0);
             output.scrollTop = 0;
 
-            // ट्रांसलेशन और बैलेंस्ड ऑटो-स्क्रॉल चालू करें
             startAutoScroll();
-
-            setTimeout(() => {
-                alert("Text load ho gaya hai!\n\nGoogle Translate background में हिंदी कर रहा है और ऑटो-स्क्रॉल धीरे-धीरे चल रहा है।");
-            }, 300);
         };
         reader.readAsText(file, 'UTF-8');
     }
