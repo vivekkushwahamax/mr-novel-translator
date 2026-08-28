@@ -1,149 +1,10 @@
-<!DOCTYPE html>
-<html lang="hi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultimate File Translator Pro - English & Chinese to Hindi</title>
-    
-    <!-- Vercel Web Analytics -->
-    <script defer src="/_vercel/insights/script.js"></script>
-    
-    <style>
-        * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        body { background: #f0f4f8; display: flex; justify-content: center; padding: 20px; }
-        .container { background: white; width: 100%; max-width: 800px; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-        h2 { color: #1e40af; text-align: center; margin-top: 0; }
-        
-        #google_translate_element {
-            background: #fff;
-            padding: 10px;
-            border-radius: 8px;
-            text-align: center;
-            margin-bottom: 20px;
-            border: 1px solid #d1d5db;
-            min-height: 50px;
-        }
-
-        .drop-zone {
-            border: 2px dashed #3b82f6;
-            padding: 30px;
-            text-align: center;
-            border-radius: 12px;
-            cursor: pointer;
-            background: #eff6ff;
-            margin-bottom: 20px;
-            transition: 0.3s;
-        }
-        .drop-zone:hover { background: #dbeafe; }
-
-        #output {
-            width: 100%;
-            min-height: 350px;
-            max-height: 60vh;
-            padding: 20px;
-            border: 1px solid #cbd5e1;
-            border-radius: 10px;
-            background: #ffffff;
-            white-space: pre-wrap;
-            font-size: 16px;
-            color: #1e293b;
-            overflow-y: auto;
-            margin-bottom: 10px;
-        }
-
-        .btn-box { display: flex; gap: 10px; flex-wrap: wrap; }
-        button { 
-            flex: 1; padding: 15px; border: none; border-radius: 8px; 
-            font-weight: bold; cursor: pointer; font-size: 16px; transition: 0.2s;
-            min-width: 140px;
-        }
-        .load-btn { background: #2563eb; color: white; }
-        .save-btn { background: #059669; color: white; }
-        button:hover { opacity: 0.9; transform: scale(0.98); }
-        
-        input[type="file"] { display: none; }
-        .status-msg { text-align: center; font-size: 13px; color: #64748b; margin-top: 10px; line-height: 1.5; }
-        .lang-info {
-            background: #f0fdf4;
-            border: 1px solid #86efac;
-            border-radius: 8px;
-            padding: 12px;
-            margin-bottom: 20px;
-            text-align: center;
-            font-size: 14px;
-            color: #166534;
-        }
-    </style>
-</head>
-<body>
-
-<div class="container">
-    <h2>English & Chinese → Hindi File Translator 4.0</h2>
-
-    <!-- Adsterra Banner Ad Unit (300x250) - Vercel Updated -->
-    <div style="text-align:center; margin-bottom:20px;">
-        <script type="text/javascript">
-            atOptions = {
-                'key' : '71690fec8e71e33020125f0e537b756a',
-                'format' : 'iframe',
-                'height' : 250,
-                'width' : 300,
-                'params' : {}
-            };
-        </script>
-        <script type="text/javascript" src="https://www.highperformanceformat.com/71690fec8e71e33020125f0e537b756a/invoke.js"></script>
-    </div>
-    <!-- End Adsterra Banner Ad -->
-
-    <div class="lang-info">
-        ✅ English (.txt) या Chinese (.txt) file upload करें → Automatically Hindi में translate हो जाएगी
-    </div>
-
-    <div id="google_translate_element"></div>
-
-    <div class="drop-zone" onclick="document.getElementById('fileInput').click()">
-        <b id="info">📂 Click to Upload English or Chinese .txt File</b><br>
-        <small style="color:#64748b;">English / 中文 → हिन्दी</small>
-        <input type="file" id="fileInput" accept=".txt">
-    </div>
-
-    <div id="output" class="notranslate">File content will appear here...<br><br>यहाँ आपकी फाइल का content दिखेगा। Load करने के बाद Google Translate automatically Hindi कर देगा।</div>
-
-    <div class="btn-box">
-        <button class="load-btn" onclick="readFile()">1. Load & Translate</button>
-        <button class="save-btn" onclick="saveFile()">2. Download Hindi File</button>
-    </div>
-    
-    <div class="status-msg">
-        <b>Tip:</b> Agar translate na ho, toh page par Right-Click karke <b>'Translate to Hindi'</b> dabayein.<br>
-        Chinese text ke liye bhi same tarika kaam karta hai. Thoda wait karein.
-    </div>
-
-    <!-- Adsterra Native Banner Ad Unit - Vercel Updated -->
-    <div style="margin-top:20px;">
-        <script async="async" data-cfasync="false" src="https://pl31020269.profitableratecpmnetwork.com/41d6e43f8ea617a9c49f629080069b48/invoke.js"></script>
-        <div id="container-41d6e43f8ea617a9c49f629080069b48"></div>
-    </div>
-    <!-- End Adsterra Native Banner -->
-</div>
-
-<script type="text/javascript">
-    function googleTranslateElementInit() {
-        new google.translate.TranslateElement({
-            pageLanguage: 'auto',
-            includedLanguages: 'hi',
-            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-            autoDisplay: true,
-            multilanguagePage: true
-        }, 'google_translate_element');
-    }
-</script>
-<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
 <script>
     const fileInput = document.getElementById('fileInput');
     const output = document.getElementById('output');
     let originalFileName = "Translated_Hindi.txt";
+    let fileLines = [];
+    let currentLineIndex = 0;
+    const CHUNK_SIZE = 200; // एक बार में 200 लाइनें लोड होंगी ताकि लैग न हो
 
     fileInput.onchange = () => {
         if(fileInput.files[0]) {
@@ -157,15 +18,40 @@
         const file = fileInput.files[0];
         if (!file) return alert("Pehle English ya Chinese .txt file select karein!");
 
+        output.innerText = "Failing loading & splitting large file... Kripya thoda intezaar karein.";
+        
         const reader = new FileReader();
         reader.onload = (e) => {
             output.classList.remove('notranslate');
-            output.innerText = e.target.result;
+            const text = e.target.result;
             
+            // बड़ी फ़ाइल को लाइनों में तोड़ना ताकि लैग न हो
+            fileLines = text.split(/\r?\n/);
+            currentLineIndex = 0;
+            output.innerText = "";
+            
+            loadNextChunk();
+
             window.scrollTo(0, 0);
             output.scrollTop = 0;
         };
         reader.readAsText(file, 'UTF-8');
+    }
+
+    // धीरे-धीरे हिस्से लोड करने का फंक्शन (Lag-free)
+    function loadNextChunk() {
+        if (currentLineIndex >= fileLines.length) return;
+
+        const chunk = fileLines.slice(currentLineIndex, currentLineIndex + CHUNK_SIZE).join("\n");
+        output.innerText += chunk + "\n";
+        currentLineIndex += CHUNK_SIZE;
+
+        // अगर अभी और डेटा बाकी है, तो अगले चंक को थोड़ा डिले देकर लोड करें
+        if (currentLineIndex < fileLines.length) {
+            setTimeout(loadNextChunk, 300);
+        } else {
+            alert("6MB ki file successfully load ho chuki hai!\n\nGoogle Translate background me ise Hindi me convert kar raha hai.");
+        }
     }
 
     function saveFile() {
@@ -181,6 +67,3 @@
         link.click();
     }
 </script>
-
-</body>
-</html>
