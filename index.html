@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultimate File Translator Pro - English & Chinese to Hindi</title>
+    <title>Ultimate File Translator Pro</title>
     <style>
         * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
         body { background: #f0f4f8; display: flex; justify-content: center; padding: 20px; }
@@ -46,63 +46,44 @@
             margin-bottom: 10px;
         }
 
-        .btn-box { display: flex; gap: 10px; flex-wrap: wrap; }
+        .btn-box { display: flex; gap: 10px; }
         button { 
             flex: 1; padding: 15px; border: none; border-radius: 8px; 
             font-weight: bold; cursor: pointer; font-size: 16px; transition: 0.2s;
-            min-width: 140px;
         }
         .load-btn { background: #2563eb; color: white; }
         .save-btn { background: #059669; color: white; }
         button:hover { opacity: 0.9; transform: scale(0.98); }
         
         input[type="file"] { display: none; }
-        .status-msg { text-align: center; font-size: 13px; color: #64748b; margin-top: 10px; line-height: 1.5; }
-        .lang-info {
-            background: #f0fdf4;
-            border: 1px solid #86efac;
-            border-radius: 8px;
-            padding: 12px;
-            margin-bottom: 20px;
-            text-align: center;
-            font-size: 14px;
-            color: #166534;
-        }
+        .status-msg { text-align: center; font-size: 13px; color: #64748b; margin-top: 10px; }
     </style>
 </head>
 <body>
 
+<!-- Code 2 (upar) -->
+<script>
+  atOptions = {
+    'key' : '71690fec8e71e33020125f0e537b756a',
+    'format' : 'iframe',
+    'height' : 250,
+    'width' : 300,
+    'params' : {}
+  };
+</script>
+<script src="https://www.highrevenueformat.com/71690fec8e71e33020125f0e537b756a/invoke.js"></script>
+
 <div class="container">
-    <h2>English & Chinese → Hindi File Translator 4.0</h2>
-
-    <!-- Adsterra Banner Ad Unit (300x250) -->
-    <div style="text-align:center; margin-bottom:20px;">
-        <script>
-            atOptions = {
-                'key' : '71690fec8e71e33020125f0e537b756a',
-                'format' : 'iframe',
-                'height' : 250,
-                'width' : 300,
-                'params' : {}
-            };
-        </script>
-        <script src="https://www.highrevenueformat.com/71690fec8e71e33020125f0e537b756a/invoke.js"></script>
-    </div>
-    <!-- End Adsterra Banner Ad -->
-
-    <div class="lang-info">
-        ✅ English (.txt) या Chinese (.txt) file upload करें → Automatically Hindi में translate हो जाएगी
-    </div>
+    <h2>Hindi File Translator 4.0</h2>
 
     <div id="google_translate_element"></div>
 
     <div class="drop-zone" onclick="document.getElementById('fileInput').click()">
-        <b id="info">📂 Click to Upload English or Chinese .txt File</b><br>
-        <small style="color:#64748b;">English / 中文 → हिन्दी</small>
+        <b id="info">📂 Click to Upload English .txt File</b>
         <input type="file" id="fileInput" accept=".txt">
     </div>
 
-    <div id="output" class="notranslate">File content will appear here...<br><br>यहाँ आपकी फाइल का content दिखेगा। Load करने के बाद Google Translate automatically Hindi कर देगा।</div>
+    <div id="output" class="notranslate">File content will appear here...</div>
 
     <div class="btn-box">
         <button class="load-btn" onclick="readFile()">1. Load & Translate</button>
@@ -110,26 +91,17 @@
     </div>
     
     <div class="status-msg">
-        <b>Tip:</b> Agar translate na ho, toh page par Right-Click karke <b>'Translate to Hindi'</b> dabayein.<br>
-        Chinese text ke liye bhi same tarika kaam karta hai. Thoda wait karein (2-5 seconds).
+        <b>Tip:</b> Agar translate na ho, toh page par Right-Click karke <b>'Translate to Hindi'</b> dabayein.
     </div>
-
-    <!-- Adsterra Native Banner Ad Unit -->
-    <div style="margin-top:20px;">
-        <script async="async" data-cfasync="false" src="https://pl31020269.profitableratecpmnetwork.com/41d6e43f8ea617a9c49f629080069b48/invoke.js"></script>
-        <div id="container-41d6e43f8ea617a9c49f629080069b48"></div>
-    </div>
-    <!-- End Adsterra Native Banner -->
 </div>
 
 <script type="text/javascript">
     function googleTranslateElementInit() {
         new google.translate.TranslateElement({
-            pageLanguage: 'auto',
+            pageLanguage: 'en',
             includedLanguages: 'hi',
             layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-            autoDisplay: true,
-            multilanguagePage: true
+            autoDisplay: true
         }, 'google_translate_element');
     }
 </script>
@@ -143,7 +115,7 @@
     fileInput.onchange = () => {
         if(fileInput.files[0]) {
             const name = fileInput.files[0].name;
-            document.getElementById('info').innerHTML = "✅ Selected: " + name + "<br><small>Ab 'Load & Translate' button dabayein</small>";
+            document.getElementById('info').innerText = "Selected: " + name;
             // Original name extract karke Hindi prefix jodna
             originalFileName = "Hindi_" + name;
         }
@@ -151,7 +123,7 @@
 
     function readFile() {
         const file = fileInput.files[0];
-        if (!file) return alert("Pehle English ya Chinese .txt file select karein!");
+        if (!file) return alert("Pehle file select karein!");
 
         const reader = new FileReader();
         reader.onload = (e) => {
@@ -161,24 +133,26 @@
             
             // Lag fix karne ke liye scroll reset
             window.scrollTo(0,0);
-            alert("Text load ho gaya!\n\nKuch seconds wait karein, Google automatically English/Chinese se Hindi kar dega.\n\nAgar nahi hua toh page par Right-Click → Translate to Hindi select karein.");
+            alert("Text load ho gaya! Kuch seconds wait karein, Google automatically ise Hindi kar dega.");
         };
-        reader.readAsText(file, 'UTF-8'); // UTF-8 for proper Chinese support
+        reader.readAsText(file);
     }
 
     function saveFile() {
         const text = output.innerText;
-        if(text.includes("File content will appear here") || text.includes("यहाँ आपकी फाइल")) {
-            return alert("Pehle file load karein aur translate hone ka wait karein!");
-        }
+        if(text.includes("File content will appear here")) return alert("Pehle file load karein!");
 
-        const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+        const blob = new Blob([text], { type: 'text/plain' });
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
-        link.download = originalFileName;
+        link.download = originalFileName; // Fix: original file name use hoga
         link.click();
     }
 </script>
+
+<!-- Code 1 (niche) -->
+<script async="async" data-cfasync="false" src="https://pl31020269.profitableratecpmnetwork.com/41d6e43f8ea617a9c49f629080069b48/invoke.js"></script>
+<div id="container-41d6e43f8ea617a9c49f629080069b48"></div>
 
 </body>
 </html>
